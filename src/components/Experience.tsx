@@ -1,6 +1,6 @@
 import { useEffect, useId, useRef, useState } from "react";
-import { experience, type Role } from "../data/portfolio";
-import { useInView, useOnScreen } from "../lib/motion";
+import { experience, featuredProjects, type Role } from "../data/portfolio";
+import { asset, useInView, useOnScreen } from "../lib/motion";
 import ChapterScene, { THEME_ENTRANCE } from "./ChapterScene";
 import Section from "./Section";
 import Img from "./ui/Img";
@@ -12,7 +12,7 @@ function Chapter({ r, k }: { r: Role; k: number }) {
   const [open, setOpen] = useState(false);
   const [ref, seen] = useInView<HTMLLIElement>(0.35);
   const live = useOnScreen(ref);
-  const { openCase } = useOverlay();
+  const { openCase, openGallery } = useOverlay();
   const id = useId();
   const mediaRight = k % 2 === 0;
 
@@ -80,7 +80,44 @@ function Chapter({ r, k }: { r: Role; k: number }) {
         </div>
 
         <Reveal kind={THEME_ENTRANCE[r.theme]} className={`min-w-0 self-start ${mediaRight ? "" : "lg:order-1"}`}>
-          {r.media ? (
+          {r.photos?.length ? (
+            <div>
+              <button
+                type="button"
+                onClick={(e) => openGallery(r.photos!, 0, `${r.org} — photos`, e.currentTarget)}
+                className="hud group block w-full text-left"
+                aria-label={`Open photos: ${r.photos[0].caption}`}
+              >
+                <span className="block overflow-hidden border border-line bg-char">
+                  <Img image={r.photos[0]} ratio="4 / 3" className="transition-transform duration-700 group-hover:scale-[1.03]" />
+                </span>
+              </button>
+              <p className="mt-2 text-sm text-mute">{r.photos[0].caption}</p>
+              <ul className="mt-3 grid grid-cols-3 gap-2" aria-label={`More ${r.org} photos`}>
+                {r.photos.slice(1).map((m, i) => (
+                  <li key={m.src}>
+                    <button
+                      type="button"
+                      onClick={(e) => openGallery(r.photos!, i + 1, `${r.org} — photos`, e.currentTarget)}
+                      aria-label={`Open photo: ${m.caption}`}
+                      className="group block aspect-[4/3] w-full overflow-hidden border border-line"
+                    >
+                      <img src={asset(m.src)} alt="" width={m.w} height={m.h} loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+              {r.projectId && (
+                <button
+                  type="button"
+                  onClick={(e) => openCase(r.projectId!, e.currentTarget.closest("li"))}
+                  className="mt-4 font-mono text-[0.72rem] uppercase tracking-[0.16em] text-acid hover:text-acid-soft"
+                >
+                  Open the {featuredProjects.find((p) => p.id === r.projectId)?.title} case study ⤢
+                </button>
+              )}
+            </div>
+          ) : r.media ? (
             <button
               type="button"
               onClick={(e) => r.projectId && openCase(r.projectId, e.currentTarget)}

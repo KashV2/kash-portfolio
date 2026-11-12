@@ -100,6 +100,11 @@ function VideoShowcase({ p, n, flip }: { p: Project; n: number; flip: boolean })
         </dl>
         <div className="mt-7 flex flex-wrap gap-3">
           <CaseButton p={p} />
+          {p.repo && (
+            <a className="btn-text" href={p.repo} target="_blank" rel="noreferrer">
+              View code on GitHub<span className="sr-only">: {p.title} (opens in a new tab)</span> ↗
+            </a>
+          )}
         </div>
         <div className="mt-6">
           <Stack p={p} />
@@ -131,6 +136,11 @@ function PosterShowcase({ p, n }: { p: Project; n: number }) {
         {p.outcome && <p className="mt-4 border-l-2 border-acid pl-3 text-[0.97rem] leading-relaxed text-mute">{p.outcome}</p>}
         <div className="mt-6 flex flex-wrap gap-3">
           <CaseButton p={p} />
+          {p.repo && (
+            <a className="btn-text" href={p.repo} target="_blank" rel="noreferrer">
+              View code on GitHub<span className="sr-only">: {p.title} (opens in a new tab)</span> ↗
+            </a>
+          )}
           {poster && (
             <button type="button" className="btn-text" onClick={(e) => openGallery(g, g.indexOf(poster), title, e.currentTarget)}>
               Full poster ⤢

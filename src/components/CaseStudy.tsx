@@ -126,6 +126,13 @@ export default function CaseStudy({ project: p }: { project: Project }) {
                     </a>
                   </li>
                 ))}
+              {p.repo && (
+                <li>
+                  <a className="link" href={p.repo} target="_blank" rel="noreferrer">
+                    View the {p.title} code on GitHub<span className="sr-only"> (opens in a new tab)</span> ↗
+                  </a>
+                </li>
+              )}
               <li>
                 <a className="link" href={profile.links.github} target="_blank" rel="noreferrer">
                   More code on my GitHub profile<span className="sr-only"> (opens in a new tab)</span> ↗

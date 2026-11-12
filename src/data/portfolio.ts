@@ -22,6 +22,7 @@ export const profile = {
     github: "https://github.com/KashV2",
     linkedin: "https://www.linkedin.com/in/kashyap-vallur-563332238/",
   },
+  headshot: { src: "media/headshot.webp", w: 400, h: 400, alt: "Portrait of Kash Vallur smiling, wearing a white collared shirt" },
   // File lives in /public. Set to null to hide the download button.
   resumeFile: "Kash_Vallur_Resume.pdf" as string | null,
 };
@@ -116,6 +117,10 @@ export const MEDIA = {
   sleepResiduals: img("sleep-residuals", 1189, 390, "Two plots: residuals versus predicted values scattered around zero, and a histogram of residuals", "Residual diagnostics", "sleep_score_guesser notebook"),
   sleepCorr: img("sleep-correlations", 1143, 834, "Heatmap of feature correlations with sleep quality: sleep duration 0.92, age 0.71, stress level −0.87", "Feature correlations with sleep quality", "sleep_score_guesser notebook"),
   sleepAge: img("sleep-age-groups", 833, 570, "Bar chart of average sleep quality by age group rising from under 30 to over 50", "Average sleep quality by age group", "sleep_score_guesser notebook"),
+  deltaPhotoTeam: img("delta-symposium-team", 1280, 960, "Kash and three teammates standing beside the LeadsLLM poster at a crowded poster session", "With teammates at the LeadsLLM poster — The Data Mine symposium", "Event photo"),
+  deltaPhotoGroup: img("delta-symposium-group", 1280, 960, "The LeadsLLM team gathered around their poster at the symposium", "The LeadsLLM team at The Data Mine symposium", "Event photo"),
+  deltaPhotoHq: img("delta-hq", 800, 1065, "The team standing outside Delta Faucet Company's office building in the snow", "Team visit to Delta Faucet's offices", "Event photo"),
+  deltaPhotoShowroom: img("delta-showroom", 1280, 960, "The team posing in Delta's showroom in front of illuminated shower fixture displays", "Inside Delta's showroom during the team visit", "Event photo"),
   deltaPoster: img("delta-poster", 2000, 1333, "Full Delta Faucet LeadsLLM research poster", "Full poster — Spring 2026", "Delta Faucet Spring 2026 poster"),
 };
 
@@ -169,6 +174,8 @@ export interface Project {
   outcome?: string;
   stack: string[];
   links?: ProjectLink[];
+  /** Public GitHub repository, if shareable. */
+  repo?: string;
   /** How the showcase is laid out — chosen by what evidence exists. */
   layout: "research" | "video" | "poster";
   cover?: MediaImage;
@@ -216,6 +223,7 @@ export const featuredProjects: Project[] = [
   },
   {
     id: "boiler-buddy",
+    repo: "https://github.com/KashV2/cbc",
     layout: "video",
     video: VIDEOS.boilerBuddy,
     title: "Boiler Buddy",
@@ -236,6 +244,7 @@ export const featuredProjects: Project[] = [
   },
   {
     id: "forecastrx",
+    repo: "https://github.com/KashV2/health-compass-pro",
     layout: "video",
     video: VIDEOS.forecastRx,
     title: "ForecastRX",
@@ -255,6 +264,7 @@ export const featuredProjects: Project[] = [
   },
   {
     id: "swole-leveling",
+    repo: "https://github.com/KashV2/swole-leveling-homebase",
     layout: "video",
     video: VIDEOS.swoleLeveling,
     title: "Swole Leveling",
@@ -315,7 +325,8 @@ export const featuredProjects: Project[] = [
     id: "leadsllm",
     layout: "poster",
     cover: MEDIA.deltaFlow,
-    gallery: [MEDIA.deltaFlow, MEDIA.deltaLeads, MEDIA.deltaPoster],
+    documents: [{ title: "Symposium poster", pages: [MEDIA.deltaPoster] }],
+    gallery: [MEDIA.deltaFlow, MEDIA.deltaLeads, MEDIA.deltaPhotoTeam, MEDIA.deltaPhotoGroup, MEDIA.deltaPhotoHq, MEDIA.deltaPhotoShowroom],
     title: "LeadsLLM",
     kind: "Mentorship",
     org: "The Data Mine × Delta Faucet · Teaching Assistant",
@@ -330,6 +341,7 @@ export const featuredProjects: Project[] = [
   },
   {
     id: "sleep-score",
+    repo: "https://github.com/KashV2/Sleep-score-predictor",
     layout: "poster",
     cover: MEDIA.sleepPred,
     gallery: [MEDIA.sleepPred, MEDIA.sleepImportance, MEDIA.sleepCorr, MEDIA.sleepOthers, MEDIA.sleepResiduals, MEDIA.sleepAge],
@@ -380,7 +392,9 @@ export interface Role {
   /** "work" = internships & TA roles (Experience), "research" = Research section. */
   category: "work" | "research";
   /** Organization logo. Local files go in /public/media. */
-  logo?: { src: string; alt: string };
+  logo?: { src: string; alt: string; tile?: boolean }; // tile = show on a white badge
+  /** Event / team photos shown with the chapter (first one is the lead image). */
+  photos?: MediaImage[];
   /** Themed backdrop + entrance for the chapter (see ChapterScene.tsx). */
   theme: "clock" | "property" | "llm" | "ski" | "water" | "crops" | "route";
   /** Project id to open from this chapter, if any. */
@@ -394,8 +408,7 @@ export const experience: Role[] = [
     org: "Revaya",
     theme: "property",
     category: "work",
-    // TODO: replace with the official logo file (e.g. "media/logo-revaya.svg")
-    logo: { src: "https://www.google.com/s2/favicons?domain=revaya.com&sz=128", alt: "Revaya logo" },
+    logo: { src: "media/logo-revaya.png", alt: "Revaya logo", tile: true },
     summary: "Designed the access, sign-on, and timekeeping backbone for a 150-person remote contractor workforce.",
     keyFigure: { value: "150", label: "remote contractors on role-based access + SSO" },
     when: "May 2026 – present",
@@ -412,8 +425,7 @@ export const experience: Role[] = [
     org: "LoftxAI",
     theme: "llm",
     category: "work",
-    // TODO: replace with the official logo file (e.g. "media/logo-loftx.svg")
-    logo: { src: "https://www.google.com/s2/favicons?domain=loftx.ai&sz=128", alt: "LOFTx.ai logo" },
+    logo: { src: "media/logo-loftx.png", alt: "LOFTx.ai logo", tile: true },
     summary: "Cut tokens per request 40–60% by redesigning when the product actually needs to call an LLM.",
     keyFigure: { value: "40–60%", label: "fewer tokens per request" },
     when: "May 2025 – May 2026",
@@ -429,7 +441,7 @@ export const experience: Role[] = [
     theme: "water",
     category: "work",
     summary: "Mentoring a 10-student team taking on a 700,000-lead backlog with LLM scoring.",
-    media: MEDIA.deltaFlow,
+    photos: [MEDIA.deltaPhotoTeam, MEDIA.deltaPhotoGroup, MEDIA.deltaPhotoHq, MEDIA.deltaPhotoShowroom],
     projectId: "leadsllm",
     when: "Aug 2025 – present",
     where: "West Lafayette, IN",
