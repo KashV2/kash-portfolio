@@ -1,0 +1,343 @@
+/* Self-hosted fonts (bundled — no external requests) */
+@import "@fontsource/chakra-petch/latin-500.css";
+@import "@fontsource/chakra-petch/latin-600.css";
+@import "@fontsource/chakra-petch/latin-700.css";
+@import "@fontsource/ibm-plex-sans/latin-400.css";
+@import "@fontsource/ibm-plex-sans/latin-500.css";
+@import "@fontsource/ibm-plex-sans/latin-600.css";
+@import "@fontsource/jetbrains-mono/latin-400.css";
+@import "@fontsource/jetbrains-mono/latin-500.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 4.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-void font-sans text-ink antialiased;
+    font-size: 1.0625rem;
+    line-height: 1.65;
+  }
+  ::selection {
+    background: #f3e600;
+    color: #09090b;
+  }
+  :focus-visible {
+    outline: 2px solid #f3e600;
+    outline-offset: 3px;
+  }
+  img {
+    max-width: 100%;
+  }
+}
+
+@layer components {
+  .label {
+    @apply font-mono text-[0.72rem] uppercase tracking-[0.2em];
+  }
+  /* Angular frames — several cut variants so panels don't all look alike */
+  .cut-br {
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 22px), calc(100% - 22px) 100%, 0 100%);
+  }
+  .cut-tl {
+    clip-path: polygon(22px 0, 100% 0, 100% 100%, 0 100%, 0 22px);
+  }
+  .cut-tr-bl {
+    clip-path: polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 28px 100%, 0 calc(100% - 28px));
+  }
+  .cut-sm {
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+  }
+  .btn {
+    @apply relative inline-flex items-center gap-2.5 px-5 py-3 font-mono text-[0.8rem] font-medium uppercase tracking-[0.14em] transition-[background-color,color,transform,box-shadow] duration-200;
+  }
+  .btn-acid {
+    @apply btn cut-sm bg-acid text-void hover:bg-acid-soft hover:shadow-acid;
+  }
+  .btn-line {
+    @apply btn border border-line-bright text-ink hover:border-acid hover:text-acid;
+  }
+  .btn-text {
+    @apply btn px-2 text-mute hover:text-acid;
+  }
+  .link {
+    @apply text-acid underline decoration-acid/40 underline-offset-4 transition-colors hover:decoration-acid;
+  }
+  .tag {
+    @apply inline-flex items-center border border-line px-2 py-0.5 font-mono text-[0.72rem] leading-5 text-mute;
+  }
+  /* Thin HUD bracket corners for media frames */
+  .hud {
+    position: relative;
+  }
+  .hud::before,
+  .hud::after {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    pointer-events: none;
+    z-index: 2;
+    transition: transform 0.25s ease;
+  }
+  .hud::before {
+    top: -6px;
+    left: -6px;
+    border-top: 1px solid var(--hud, #f3e600);
+    border-left: 1px solid var(--hud, #f3e600);
+  }
+  .hud::after {
+    bottom: -6px;
+    right: -6px;
+    border-bottom: 1px solid var(--hud, #f3e600);
+    border-right: 1px solid var(--hud, #f3e600);
+  }
+  .hud:hover::before,
+  .hud:focus-within::before {
+    transform: translate(-4px, -4px);
+  }
+  .hud:hover::after,
+  .hud:focus-within::after {
+    transform: translate(4px, 4px);
+  }
+  .scanlines {
+    background: repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 3px);
+  }
+}
+
+/* ───────────────── Motion ─────────────────
+ * Hidden "before" states apply only when html has .motion-ok
+ * (added by JS when the user hasn't asked for reduced motion),
+ * so content is always visible without JS or with reduced motion.
+ */
+.motion-ok [data-reveal]:not([data-inview="true"]) {
+  visibility: hidden;
+}
+.motion-ok [data-inview="true"][data-reveal="wipe-right"] {
+  animation: wipe-right 0.9s cubic-bezier(0.77, 0, 0.18, 1) both;
+}
+.motion-ok [data-inview="true"][data-reveal="wipe-left"] {
+  animation: wipe-left 0.9s cubic-bezier(0.77, 0, 0.18, 1) both;
+}
+.motion-ok [data-inview="true"][data-reveal="iris"] {
+  animation: iris 1s cubic-bezier(0.77, 0, 0.18, 1) both;
+}
+.motion-ok [data-inview="true"][data-reveal="rise"] {
+  animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.motion-ok [data-inview="true"][data-reveal="tiles"] > * {
+  animation: tile 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.motion-ok [data-inview="true"][data-reveal="tiles"] > *:nth-child(2) { animation-delay: 0.1s; }
+.motion-ok [data-inview="true"][data-reveal="tiles"] > *:nth-child(3) { animation-delay: 0.2s; }
+.motion-ok [data-inview="true"][data-reveal="tiles"] > *:nth-child(4) { animation-delay: 0.3s; }
+.motion-ok [data-inview="true"][data-reveal="glitch"] {
+  animation: glitch-in 0.55s steps(1, end) both;
+}
+
+@keyframes wipe-right {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+@keyframes wipe-left {
+  from { clip-path: inset(0 0 0 100%); }
+  to { clip-path: inset(0 0 0 0); }
+}
+@keyframes iris {
+  from { clip-path: inset(48% 48% 48% 48%); }
+  to { clip-path: inset(0 0 0 0); }
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes tile {
+  from { opacity: 0; transform: translateY(18px) scale(0.98); clip-path: inset(0 0 100% 0); }
+  to { opacity: 1; transform: none; clip-path: inset(0 0 0 0); }
+}
+@keyframes glitch-in {
+  0% { opacity: 0; transform: translateX(-8px); clip-path: inset(0 0 60% 0); }
+  20% { opacity: 1; transform: translateX(6px); clip-path: inset(40% 0 20% 0); }
+  40% { transform: translateX(-3px); clip-path: inset(10% 0 50% 0); }
+  60% { transform: translateX(2px); clip-path: inset(0 0 0 0); }
+  100% { opacity: 1; transform: none; clip-path: inset(0 0 0 0); }
+}
+
+/* Hero: staggered line reveal */
+.motion-ok .hero-line > span {
+  display: inline-block;
+  animation: line-up 0.9s cubic-bezier(0.2, 0.75, 0.15, 1) both;
+}
+.hero-line {
+  display: block;
+  overflow: hidden;
+}
+@keyframes line-up {
+  from { transform: translateY(105%); }
+  to { transform: none; }
+}
+.motion-ok .hero-fade {
+  animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.motion-ok .hero-plate {
+  animation: plate 1.3s cubic-bezier(0.77, 0, 0.18, 1) 0.15s both;
+}
+@keyframes plate {
+  from { clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%); }
+  to { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+}
+.motion-ok .holo {
+  animation: holo-on 1.2s steps(1, end) 1s both, holo-flicker 7s steps(1, end) 3s infinite;
+}
+@keyframes holo-on {
+  0% { opacity: 0; }
+  10% { opacity: 0.6; }
+  15% { opacity: 0; }
+  30% { opacity: 0.85; }
+  35% { opacity: 0.2; }
+  50%, 100% { opacity: 1; }
+}
+@keyframes holo-flicker {
+  0%, 96%, 100% { opacity: 1; }
+  97% { opacity: 0.55; }
+  98% { opacity: 0.95; }
+}
+
+/* Gallery slide transitions */
+.slide-next { animation: slide-next 0.5s cubic-bezier(0.77, 0, 0.18, 1) both; }
+.slide-prev { animation: slide-prev 0.5s cubic-bezier(0.77, 0, 0.18, 1) both; }
+@keyframes slide-next {
+  from { clip-path: inset(0 0 0 100%); transform: translateX(3%); }
+  to { clip-path: inset(0 0 0 0); transform: none; }
+}
+@keyframes slide-prev {
+  from { clip-path: inset(0 100% 0 0); transform: translateX(-3%); }
+  to { clip-path: inset(0 0 0 0); transform: none; }
+}
+
+/* Native dialog backdrop */
+dialog::backdrop {
+  background: rgba(5, 5, 7, 0.86);
+  backdrop-filter: blur(4px);
+}
+dialog[open] {
+  animation: none;
+}
+
+.trace-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 2.2s cubic-bezier(0.65, 0, 0.35, 1) 0.6s forwards;
+}
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.001ms !important;
+  }
+  .trace-draw { stroke-dashoffset: 0; }
+}
+
+/* Placeholder street light trails */
+.trail {
+  stroke-dasharray: 260 1300;
+  animation: trail 2.6s linear infinite;
+}
+@keyframes trail {
+  from { stroke-dashoffset: 1560; }
+  to { stroke-dashoffset: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .trail { stroke-dasharray: none; opacity: 0.35; }
+}
+
+/* ───────── Experience chapter themes ───────── */
+.chapter-scene {
+  opacity: 0;
+  transition: opacity 1s ease;
+  -webkit-mask-image: radial-gradient(ellipse 95% 85% at 50% 50%, #000 45%, transparent 85%);
+  mask-image: radial-gradient(ellipse 95% 85% at 50% 50%, #000 45%, transparent 85%);
+}
+.chapter-scene[data-active="true"] { opacity: 0.85; }
+@media (max-width: 767px) { .chapter-scene[data-active="true"] { opacity: 0.45; } }
+.chapter-scene[data-live="false"] * { animation-play-state: paused !important; }
+
+.chapter-scene .scene-draw { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.chapter-scene[data-active="true"] .scene-draw { animation: draw 1.8s cubic-bezier(0.65, 0, 0.35, 1) 0.2s forwards; }
+.chapter-scene .scene-pop { opacity: 0; transform-box: fill-box; transform-origin: center; }
+.chapter-scene[data-active="true"] .scene-pop { animation: pop 0.45s cubic-bezier(0.2, 0.8, 0.2, 1.3) both; }
+@keyframes pop { from { opacity: 0; transform: scale(0.2); } to { opacity: 1; transform: none; } }
+
+.scene-snow { animation: snow linear infinite; }
+@keyframes snow { from { transform: translate(30px, -560px); } to { transform: translate(-30px, 560px); } }
+.scene-drip { animation: drip 1.8s cubic-bezier(0.5, 0, 1, 1) infinite; }
+@keyframes drip { 0% { transform: translateY(0); opacity: 0; } 10% { opacity: 1; } 100% { transform: translateY(205px); opacity: 0.7; } }
+.scene-ripple { transform-box: fill-box; transform-origin: center; animation: ripple 1.8s ease-out infinite; }
+@keyframes ripple { from { transform: scale(1); opacity: 0.9; } to { transform: scale(7); opacity: 0; } }
+.scene-wave { animation: wave 5s linear infinite; }
+.scene-wave-slow { animation-duration: 8s; animation-direction: reverse; }
+@keyframes wave { to { transform: translateX(-200px); } }
+.chapter-scene .scene-rise { transform: translateY(140px); transition: transform 1.6s cubic-bezier(0.2, 0.7, 0.2, 1) 0.2s; }
+.chapter-scene[data-active="true"] .scene-rise { transform: none; }
+.scene-window { opacity: 0.06; animation: window 11s steps(1, end) infinite; }
+@keyframes window { 0% { opacity: 0.06; } 8%, 72% { opacity: 0.75; } 80%, 100% { opacity: 0.06; } }
+.scene-sway { transform-box: fill-box; transform-origin: 50% 100%; animation: sway 3.2s ease-in-out infinite alternate; }
+@keyframes sway { from { transform: rotate(-7deg); } to { transform: rotate(7deg); } }
+.scene-spin { transform-box: fill-box; transform-origin: center; animation: spin 20s linear infinite; }
+.scene-spin-60 { transform-box: fill-box; transform-origin: center; animation: spin 60s steps(60, end) infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Themed media entrances */
+@property --sweep { syntax: "<angle>"; inherits: false; initial-value: 360deg; }
+@property --blind { syntax: "<percentage>"; inherits: false; initial-value: 10%; }
+
+/* ski — a diagonal carve down the slope */
+.motion-ok [data-inview="true"][data-reveal="carve"] { animation: carve 1s cubic-bezier(0.77, 0, 0.18, 1) both; }
+@keyframes carve {
+  from { clip-path: polygon(0 0, 0 0, 0 0); transform: translate(-12px, -12px) rotate(-1.5deg); }
+  to { clip-path: polygon(0 0, 220% 0, 0 220%); transform: none; }
+}
+/* faucet — water fills up from the bottom with a wavy edge */
+.motion-ok [data-inview="true"][data-reveal="flood"] { animation: flood 1.2s cubic-bezier(0.3, 0.6, 0.2, 1) both; }
+@keyframes flood {
+  0% { clip-path: polygon(0 100%, 12.5% 100%, 25% 100%, 37.5% 100%, 50% 100%, 62.5% 100%, 75% 100%, 87.5% 100%, 100% 100%, 100% 100%, 0 100%); }
+  55% { clip-path: polygon(0 48%, 12.5% 40%, 25% 48%, 37.5% 40%, 50% 48%, 62.5% 40%, 75% 48%, 87.5% 40%, 100% 48%, 100% 100%, 0 100%); }
+  80% { clip-path: polygon(0 4%, 12.5% 10%, 25% 4%, 37.5% 10%, 50% 4%, 62.5% 10%, 75% 4%, 87.5% 10%, 100% 4%, 100% 100%, 0 100%); }
+  100% { clip-path: polygon(0 0, 12.5% 0, 25% 0, 37.5% 0, 50% 0, 62.5% 0, 75% 0, 87.5% 0, 100% 0, 100% 100%, 0 100%); }
+}
+/* property — elevator / front doors slide open from the center */
+.motion-ok [data-inview="true"][data-reveal="doors"] { animation: doors 0.95s cubic-bezier(0.77, 0, 0.18, 1) both; }
+@keyframes doors { from { clip-path: inset(0 50% 0 50%); } to { clip-path: inset(0 0 0 0); } }
+/* crops — furrows widen into the full image */
+.motion-ok [data-inview="true"][data-reveal="blinds"] {
+  -webkit-mask-image: repeating-linear-gradient(90deg, #000 0 var(--blind), transparent var(--blind) 10%);
+  mask-image: repeating-linear-gradient(90deg, #000 0 var(--blind), transparent var(--blind) 10%);
+  animation: blinds 1.1s cubic-bezier(0.6, 0, 0.2, 1) both;
+}
+@keyframes blinds { from { --blind: 0%; transform: translateY(14px); } to { --blind: 10%; transform: none; } }
+/* route — revealed in GPS-like jumps, left to right */
+.motion-ok [data-inview="true"][data-reveal="trace"] { animation: trace 1.1s steps(9, end) both; }
+@keyframes trace { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+/* timekeeping — a clock-hand sweep */
+.motion-ok [data-inview="true"][data-reveal="clock"] {
+  -webkit-mask-image: conic-gradient(from 0deg, #000 var(--sweep), transparent 0);
+  mask-image: conic-gradient(from 0deg, #000 var(--sweep), transparent 0);
+  animation: sweep 1.2s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+@keyframes sweep { from { --sweep: 0deg; } to { --sweep: 360deg; } }
+.scene-packet { offset-rotate: 0deg; animation: packet 4.4s linear infinite; }
+@keyframes packet { from { offset-distance: 0%; opacity: 0; } 8% { opacity: 1; } 92% { opacity: 1; } to { offset-distance: 100%; opacity: 0; } }
+/* LLM — revealed top-down in chunks, like streamed tokens */
+.motion-ok [data-inview="true"][data-reveal="stream"] { animation: stream 1s steps(8, end) both; }
+@keyframes stream { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 0 0); } }
