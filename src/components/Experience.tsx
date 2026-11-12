@@ -86,14 +86,14 @@ function Chapter({ r, k }: { r: Role; k: number }) {
                 type="button"
                 onClick={(e) => openGallery(r.photos!, 0, `${r.org} — photos`, e.currentTarget)}
                 className="hud group block w-full text-left"
-                aria-label={`Open photos: ${r.photos[0].caption}`}
+                aria-label={`Open: ${r.photos[0].caption}`}
               >
-                <span className="block overflow-hidden border border-line bg-char">
-                  <Img image={r.photos[0]} ratio="4 / 3" className="transition-transform duration-700 group-hover:scale-[1.03]" />
+                <span className="block overflow-hidden border border-line bg-[#f2f2ee]">
+                  <Img image={r.photos[0]} ratio={r.photos[0].src.includes("poster") ? undefined : "4 / 3"} fit={r.photos[0].src.includes("poster") ? "contain" : "cover"} className="transition-transform duration-700 group-hover:scale-[1.03]" />
                 </span>
               </button>
               <p className="mt-2 text-sm text-mute">{r.photos[0].caption}</p>
-              <ul className="mt-3 grid grid-cols-3 gap-2" aria-label={`More ${r.org} photos`}>
+              <ul className="mt-3 grid grid-cols-4 gap-2" aria-label={`More ${r.org} photos`}>
                 {r.photos.slice(1).map((m, i) => (
                   <li key={m.src}>
                     <button

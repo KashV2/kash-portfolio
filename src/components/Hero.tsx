@@ -109,7 +109,7 @@ export default function Hero() {
         </div>
 
         {/* ── Work reel: real media, one click from the opening screen ── */}
-        <div className="relative z-10 mt-10 lg:-mt-10">
+        <div className="relative z-10 mt-14 lg:mt-12">
           <p className="label mb-3 flex items-center gap-3 text-dim">
             <span className="h-px w-8 bg-acid" aria-hidden="true" /> Work reel — real builds &amp; research
           </p>

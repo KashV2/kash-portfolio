@@ -212,7 +212,8 @@ export default function Projects() {
       )}
 
       <div className="mt-24">
-        <h3 className="label mb-5 text-dim">More builds</h3>
+        {moreProjects.length > 0 && <h3 className="label mb-5 text-dim">More builds</h3>}
+        {moreProjects.length > 0 && (
         <Reveal kind="tiles" as="ul" className="grid gap-px bg-line md:grid-cols-2 lg:grid-cols-3">
           {moreProjects.map((p) => (
             <li key={p.id} className="bg-void p-6">
@@ -223,6 +224,7 @@ export default function Projects() {
             </li>
           ))}
         </Reveal>
+        )}
         <p className="mt-6 text-mute">
           Code lives on{" "}
           <a href={profile.links.github} target="_blank" rel="noreferrer" className="link">

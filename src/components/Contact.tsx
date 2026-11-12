@@ -22,8 +22,8 @@ export default function Contact() {
             <span className="text-acid">talk.</span>
           </h2>
           <p className="mt-8 max-w-lg text-lg leading-relaxed text-mute">
-            I&apos;m looking for internships in machine learning, data science, and software engineering. I&apos;m also happy to talk
-            about signal processing, LLM systems, or a good hackathon idea. Email is the fastest way to reach me.
+            I&apos;m looking for data science, software engineering, data engineering, and machine learning roles. I&apos;m also happy to
+            talk about data pipelines, LLM systems, or a good hackathon idea. Email is the fastest way to reach me.
           </p>
         </Reveal>
 

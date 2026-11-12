@@ -10,12 +10,12 @@
 export const profile = {
   name: "Kash Vallur",
   fullName: "Kashyap Vallur",
-  headline: "Data Science @ Purdue · ML & Software Engineering",
+  headline: "Data Science @ Purdue · Data · ML · Full-Stack",
   // One-sentence value proposition shown in the hero.
   pitch:
-    "I build applied ML systems end to end — from sensor-signal pipelines to cost-aware LLM products — and ship them to the people who actually use them.",
+    "I take messy, unstructured data and turn it into clean databases, automated pipelines, and analysis that surfaces the patterns hiding inside. I build systems that solve real business problems, backed by hands-on full-stack software engineering experience.",
   location: "West Lafayette, IN · open to remote",
-  status: "Seeking ML / data science / SWE internships",
+  status: "Seeking Data Science, SWE, Data Engineering & ML roles",
   // Public contact info only. Do NOT add phone numbers or street addresses.
   email: "kasipanther@outlook.com",
   links: {
@@ -362,20 +362,7 @@ export const featuredProjects: Project[] = [
 ];
 
 /** Smaller projects shown as a compact list under the featured grid. */
-export const moreProjects: Project[] = [
-  {
-    id: "video-game-sales",
-    layout: "poster",
-    title: "Video Game Sales Analysis",
-    kind: "Academic",
-    when: "",
-    tagline:
-      "ANOVA, paired t-test, and regression on 16,599 titles: genre had no significant effect on global sales (p = 0.408), while NA outsold EU by 0.11M units per title (p < 0.0001).",
-    problem: "",
-    contribution: [],
-    stack: ["R", "ANOVA", "Regression"],
-  },
-];
+export const moreProjects: Project[] = [];
 
 export interface Role {
   role: string;
@@ -441,7 +428,7 @@ export const experience: Role[] = [
     theme: "water",
     category: "work",
     summary: "Mentoring a 10-student team taking on a 700,000-lead backlog with LLM scoring.",
-    photos: [MEDIA.deltaPhotoTeam, MEDIA.deltaPhotoGroup, MEDIA.deltaPhotoHq, MEDIA.deltaPhotoShowroom],
+    photos: [MEDIA.deltaPoster, MEDIA.deltaPhotoTeam, MEDIA.deltaPhotoGroup, MEDIA.deltaPhotoHq, MEDIA.deltaPhotoShowroom],
     projectId: "leadsllm",
     when: "Aug 2025 – present",
     where: "West Lafayette, IN",
